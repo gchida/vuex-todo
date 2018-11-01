@@ -21,7 +21,6 @@ export default {
     state.data[pos].body = body;
   },
   [types.deleteTodo](state, id) {
-    console.log(state);
     const data = state.data.filter(data => {
       return data.id !== id;
     });

@@ -1,6 +1,8 @@
 <template>
   <div id="app">
     <div class="app_title">vuex-todo</div>
+
+    <!-- Todo作成 -->
     <div class="todo_form">
       <form @submit.prevent="createTodos(form)">
         タイトル : <input type="text" v-model.trim="form.title">
@@ -8,6 +10,8 @@
         <input class="submit_btn" type="submit" value="作成">
       </form>
     </div>
+
+    <!-- Todo一覧表示 -->
     <div class="w__todo" v-for="(todo, index) in todoslist" :key="index">
       <div class="todo_lists" @click="editTodoID(todo.id)">
         <div class="todo_list">{{ todo.title }}</div>
@@ -15,20 +19,23 @@
       </div>
       <button type="button" class="delete_btn" @click="deleteTodo(todo.id)">削除</button>
     </div>
-      <template v-if="editTodo.length !== 0">
-        <div class="todo_form">
-          <div class="edit_title">Todo編集</div>
-          <form
-            @submit.prevent="updateTodo(editTodo)"
-            class="editForm">
-            <label>タイトル : &nbsp;</label>
-            <input type="text" v-model="editTodo.title"/>
-            <label>内容 : </label>
-            <input type="text" v-model="editTodo.body"/>
-            <input class="submit_btn" type="submit" value="変更"/>
-          </form>
-        </div>
-      </template>
+
+    <!-- Todo編集 -->
+    <template v-if="editTodo.length !== 0">
+      <div class="todo_form">
+        <div class="edit_title">Todo編集</div>
+        <form
+          @submit.prevent="updateTodo(editTodo)"
+          class="editForm">
+          <label>タイトル : &nbsp;</label>
+          <input type="text" v-model="editTodo.title"/>
+          <label>内容 : </label>
+          <input type="text" v-model="editTodo.body"/>
+          <input class="submit_btn" type="submit" value="変更"/>
+        </form>
+      </div>
+
+    </template>
   </div>
 </template>
 
@@ -45,7 +52,7 @@ import cloneDeep from "lodash/cloneDeep";
          title: '',
          body: ''
        },
-       editTodo: ""
+       editTodo: ''
      };
    },
    computed: {
@@ -53,10 +60,6 @@ import cloneDeep from "lodash/cloneDeep";
       todoslist: state => cloneDeep(state.data)
     }),
     ...mapGetters("todos", ["getTodos", "selectEditItem"]),
-    sample() {
-      console.log(this.editTodo);
-      return false;
-    }
   },
   created() {},
   methods: {
